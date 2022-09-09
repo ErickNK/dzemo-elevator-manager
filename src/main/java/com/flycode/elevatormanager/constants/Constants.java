@@ -5,15 +5,18 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Constants {
 
+    public static final String ELEVATOR_QUEUE_PREFIX = "elevator-";
+    public static final String ELEVATOR_PUSHER_CHANNEL = "elevator-movements";
+
     @UtilityClass
-    static class DoorStates {
+    public static class DoorStates {
         public static final String OPEN = "open";
         public static final String CLOSED = "closed";
     }
 
     @UtilityClass
-    static class ElevatorStates {
-        public static final String MOVING = "open";
+    public static class ElevatorStates {
+        public static final String MOVING = "moving";
         public static final String STATIONARY = "stationary";
         public static final String DOOR_OPEN = "door_open";
         public static final String DOOR_CLOSED = "door_closed";
@@ -22,8 +25,9 @@ public class Constants {
     }
 
     @UtilityClass
-    static class ElevatorDirection {
+    public static class ElevatorDirection {
         public static final String UP = "up";
         public static final String DOWN = "down";
+        public static final String NONE = "none";
     }
 }

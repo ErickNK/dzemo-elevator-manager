@@ -1,5 +1,6 @@
 package com.flycode.elevatormanager.models;
 
+import com.flycode.elevatormanager.listeners.ElevatorAuditTrailListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 
-@Table(name = "elevator")
+@Table(name = "elevators")
 @Entity()
-@EntityListeners({AuditingEntityListener.class})
+@EntityListeners({AuditingEntityListener.class, ElevatorAuditTrailListener.class})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +22,9 @@ public class Elevator implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="elevator_tag")
+    private Long elevatorTag;
 
     @Column()
     private Integer floor;
@@ -31,7 +35,7 @@ public class Elevator implements Serializable {
     @Column()
     private String direction;
 
-    @Column()
+    @Column(name = "door_state")
     private String doorState;
 
     @Column(name = "created_date", columnDefinition = "DATETIME", nullable = false)
