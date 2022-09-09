@@ -76,11 +76,12 @@ public class MoveElevatorService {
                 } else if (counter == doorsTimePerAction) {
                     elevator.setState(Constants.ElevatorStates.DOOR_CLOSED);
                     elevator.setDoorState(Constants.DoorStates.CLOSED);
+                    doorNotInitiallyClosed = false;
                 }
             } else if (totalTimeToMove - counter <= doorsTimePerAction) { // last two seconds
                 if (totalTimeToMove - counter == 0) {
                     elevator.setState(Constants.ElevatorStates.DOOR_OPEN);
-                    elevator.setDoorState(Constants.ElevatorStates.DOOR_OPEN);
+                    elevator.setDoorState(Constants.DoorStates.OPEN);
                 } else {
                     elevator.setState(Constants.ElevatorStates.DOOR_OPENING);
                 }

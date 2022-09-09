@@ -44,6 +44,7 @@ public class ElevatorAuditTrailListener {
         auditTrail.setFloor(elevator.getFloor());
         auditTrail.setState(elevator.getState());
         auditTrail.setDirection(elevator.getDirection());
+        auditTrail.setDoorState(elevator.getDoorState());
         auditTrail.setCreatedDate(OffsetDateTime.now(clock));
         return auditTrail;
     }

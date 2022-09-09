@@ -45,7 +45,7 @@ public class DbConfig implements CommandLineRunner {
                     elevator.setFloor(0);
                     elevator.setState(Constants.ElevatorStates.STATIONARY);
                     elevator.setDirection(Constants.ElevatorDirection.NONE);
-                    elevator.setDoorState(Constants.ElevatorStates.DOOR_CLOSED);
+                    elevator.setDoorState(Constants.DoorStates.CLOSED);
                     elevatorRepository.save(elevator);
                 }
             }
