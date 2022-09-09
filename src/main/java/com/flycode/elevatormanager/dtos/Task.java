@@ -1,6 +1,5 @@
 package com.flycode.elevatormanager.dtos;
 
-import com.flycode.elevatormanager.configs.SecurityConfig;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
