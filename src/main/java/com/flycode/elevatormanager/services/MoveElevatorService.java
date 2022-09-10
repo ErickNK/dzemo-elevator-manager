@@ -4,6 +4,7 @@ import com.flycode.elevatormanager.constants.Constants;
 import com.flycode.elevatormanager.dtos.Task;
 import com.flycode.elevatormanager.models.Elevator;
 import com.flycode.elevatormanager.repositories.ElevatorRepository;
+import com.flycode.elevatormanager.utils.LogHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +34,10 @@ public class MoveElevatorService {
         try {
             var optionalElevator = elevatorRepository.findByElevatorTag(task.getElevatorID());
             if (optionalElevator.isEmpty()) {
-                // TODO: log error
+                LogHelper.builder(log)
+                        .logMsg("Elevator does not exits")
+                        .info();
+
                 return CompletableFuture.completedFuture(null);
             }
             var elevator = optionalElevator.get();
@@ -52,9 +56,18 @@ public class MoveElevatorService {
             }
 
             moveElevator(elevator, totalTimeToMove, doorNotInitiallyClosed, direction);
+
+            LogHelper.builder(log)
+                    .logMsg("Elevator moved to floor: " + task.getFloorTo())
+                    .logDetailedMsg("Elevator :" + elevator.getElevatorTag())
+                    .info();
             return CompletableFuture.completedFuture(null);
         } catch (InterruptedException e) {
-            // TODO: log error
+            LogHelper.builder(log)
+                    .logMsg("Encountered error when moving elevator")
+                    .logDetailedMsg(e.getMessage())
+                    .info();
+
             return CompletableFuture.completedFuture(null);
         }
     }

@@ -19,6 +19,16 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Elevator implements Serializable {
+
+    public Elevator(Long id, Long elevatorTag, Integer floor, String state, String direction, String doorState) {
+        this.id = id;
+        this.elevatorTag = elevatorTag;
+        this.floor = floor;
+        this.state = state;
+        this.direction = direction;
+        this.doorState = doorState;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

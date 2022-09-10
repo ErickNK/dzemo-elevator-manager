@@ -31,7 +31,7 @@ public class HandleCallElevatorRequestService {
     Integer floorCount;
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    RabbitTemplate rabbitTemplate;
 
     @Async
     public CompletableFuture<Response<Boolean>> execute(CallElevatorRequest callElevatorRequest) {
@@ -39,31 +39,20 @@ public class HandleCallElevatorRequestService {
         try {
             // check movement possible
             if (callElevatorRequest.getFloorNumber() < 0 || callElevatorRequest.getFloorNumber() > (floorCount - 1)) {
-                Response<Boolean> response = new Response<>(
-                        HttpStatus.BAD_REQUEST.value(),
-                        null,
-                        "Floor is out of bounds"
-                );
-                return CompletableFuture.completedFuture(response);
+                return CompletableFuture.completedFuture(Response.withBadRequestError("Floor is out of bounds"));
             }
 
             var optionalElevator = elevatorRepository.findByElevatorTag(callElevatorRequest.getElevatorId());
             if (optionalElevator.isEmpty()) {
-                Response<Boolean> response = new Response<>(
-                        HttpStatus.BAD_REQUEST.value(),
-                        null,
-                        "Elevator does not exists"
-                );
-                return CompletableFuture.completedFuture(response);
+                return CompletableFuture.completedFuture(Response.withBadRequestError("Elevator does not exists"));
             }
             var elevator = optionalElevator.get();
 
             //TODO: check for existing task
 
-
             // calling on same floor
             if (elevator.getFloor().equals(callElevatorRequest.getFloorNumber())) {
-                return onElevatorOnSameFloor(elevator);
+                return CompletableFuture.completedFuture(Response.withBadRequestError("Elevator already on same floor"));
             }
 
             // queue task
@@ -89,22 +78,4 @@ public class HandleCallElevatorRequestService {
             return CompletableFuture.completedFuture(response);
         }
     }
-
-    private CompletableFuture<Response<Boolean>> onElevatorOnSameFloor(Elevator elevator) {
-        if (
-                elevator.getState().equals(Constants.ElevatorStates.DOOR_OPEN) ||
-                        elevator.getState().equals(Constants.ElevatorStates.DOOR_OPENING)
-        ) {
-            Response<Boolean> response = new Response<>(
-                    HttpStatus.OK.value(),
-                    Boolean.TRUE,
-                    null
-            );
-            return CompletableFuture.completedFuture(response);
-        }
-
-        // TODO: disrupt elevator if moving or door closing
-        return CompletableFuture.completedFuture(null);
-    }
-
 }

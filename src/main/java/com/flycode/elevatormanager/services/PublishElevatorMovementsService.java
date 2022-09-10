@@ -3,6 +3,7 @@ package com.flycode.elevatormanager.services;
 import com.flycode.elevatormanager.constants.Constants;
 import com.flycode.elevatormanager.models.Elevator;
 import com.flycode.elevatormanager.repositories.ElevatorRepository;
+import com.flycode.elevatormanager.utils.LogHelper;
 import com.pusher.rest.Pusher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public class PublishElevatorMovementsService {
     Pusher pusher;
 
     @Async
-//    @Transactional
     public CompletableFuture<Void> execute(Elevator elevator) {
         elevatorRepository.save(elevator);
 
@@ -31,6 +31,10 @@ public class PublishElevatorMovementsService {
                 Constants.ELEVATOR_QUEUE_PREFIX + elevator.getId(),
                 elevator
         );
+
+        LogHelper.builder(log)
+                .logMsg("Saved elevator movements")
+                .info();
 
         return CompletableFuture.completedFuture(null);
     }
