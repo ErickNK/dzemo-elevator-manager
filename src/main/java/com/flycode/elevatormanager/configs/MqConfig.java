@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flycode.elevatormanager.constants.Constants;
 import com.flycode.elevatormanager.dtos.Task;
 import com.flycode.elevatormanager.listeners.ElevatorCallListener;
+import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -45,8 +46,8 @@ public class MqConfig implements RabbitListenerConfigurer {
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(mainExchange);
+    public DirectExchange exchange() {
+        return new DirectExchange(mainExchange);
     }
 
     @Bean
@@ -103,7 +104,7 @@ public class MqConfig implements RabbitListenerConfigurer {
                 endpoint.setId(elevatorCallListener.getClass().getSimpleName() + "_" + queue);
                 endpoint.setQueueNames(queue);
                 endpoint.setBean(elevatorCallListener);
-                endpoint.setMethod(elevatorCallListener.getClass().getMethod("receiveElevatorCallTask", Task.class));
+                endpoint.setMethod(elevatorCallListener.getClass().getMethod("receiveElevatorCallTask", Task.class, Channel.class, Long.class));
                 endpoint.setMessageHandlerMethodFactory(defaultMessageHandlerMethodFactory());
                 endpoint.setMessageConverter(converter());
                 endpoint.setAckMode(AcknowledgeMode.MANUAL);
