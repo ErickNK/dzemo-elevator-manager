@@ -20,3 +20,4 @@ elevator-configs.elevators-count=5
 2. Find SQL schema scripts to setup database on root directory
    - execute scripts on mysql docker container created by docker-compose under localhost:3306
 
+3. Run java application

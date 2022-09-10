@@ -1,7 +1,5 @@
 <configuration>
 
-    <property name="HOME_LOG" value="elevator-manager.log"/>
-
     <property name="FILE_LOG_PATTERN" value="%d{yy-MM-dd HH:mm:ss.SSS} | Severity=%-5p | %m %n"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,38 +9,12 @@
         </encoder>
     </appender>
 
-    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-
-        <file>${HOME_LOG}</file>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>/tmp/logs/ms-logging.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-            <!-- each archived file, size max 10MB -->
-            <maxFileSize>50MB</maxFileSize>
-            <!-- total size of all archive files, if total size > 20GB,
-            it will delete old archived file -->
-            <totalSizeCap>20GB</totalSizeCap>
-            <!-- 60 days to keep -->
-            <maxHistory>60</maxHistory>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
-
     <logger name="com.flycode.elevatormanager" level="info" additivity="false">
-        <appender-ref ref="FILE-ROLLING"/>
         <appender-ref ref="CONSOLE"/>
     </logger>
 
     <logger name="org.springframework" level="info" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
-
-    <root level="error">
-        <appender-ref ref="FILE-ROLLING"/>
-    </root>
-
 
 </configuration>
