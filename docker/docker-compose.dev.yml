@@ -22,20 +22,6 @@ services:
       - MYSQL_USER=elevator_manager
       - MYSQL_PASSWORD=12345678
 
-  ### Redis #############################################
-  redis:
-    build: ./redis
-    restart: always
-    image: dzemo-demo-redis
-    container_name: dzemo-demo-redis
-    hostname: dzemo-demo-redis
-    ports:
-      - "6379:6379"
-    networks:
-      - backend
-    volumes:
-      - "../data/redis:/data"
-
  ### RabbitMQ #############################################
   rabbitmq:
     build: ./rabbitmq

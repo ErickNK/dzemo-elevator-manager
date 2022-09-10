@@ -59,7 +59,7 @@ class MoveElevatorServiceTest {
         ReflectionTestUtils.setField(inTesting, "doorsTimePerAction", doorsTimePerAction);
     }
 
-    @DisplayName("Moves elevator to specified floor at exact timing")
+    @DisplayName("Moves elevator to specified floor at within small margin of error seconds")
     @Test
     void movesElevatorToFloor() throws ExecutionException, InterruptedException {
         // Arrange
