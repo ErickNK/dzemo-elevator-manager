@@ -59,7 +59,7 @@ public class MoveElevatorService {
 
             LogHelper.builder(log)
                     .logMsg("Elevator moved to floor: " + task.getFloorTo())
-                    .logDetailedMsg("Elevator :" + elevator.getElevatorTag())
+                    .logDetailedMsg("Elevator: " + elevator.getElevatorTag())
                     .info();
             return CompletableFuture.completedFuture(null);
         } catch (InterruptedException e) {

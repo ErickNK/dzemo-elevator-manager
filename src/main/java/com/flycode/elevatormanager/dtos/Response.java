@@ -28,4 +28,12 @@ public class Response<E> {
                 error
         );
     }
+
+    public static <T> Response<T> successResponse(T body) {
+        return new Response<>(
+                HttpStatus.OK.value(),
+                body,
+                null
+        );
+    }
 }

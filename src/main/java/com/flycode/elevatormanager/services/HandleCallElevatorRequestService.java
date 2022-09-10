@@ -6,6 +6,7 @@ import com.flycode.elevatormanager.dtos.Response;
 import com.flycode.elevatormanager.dtos.Task;
 import com.flycode.elevatormanager.models.Elevator;
 import com.flycode.elevatormanager.repositories.ElevatorRepository;
+import com.flycode.elevatormanager.utils.LogHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,10 @@ public class HandleCallElevatorRequestService {
                     task
             );
 
+            LogHelper.builder(log)
+                    .logMsg("Elevator call queued.")
+                    .error();
+
             Response<Boolean> response = new Response<>(
                     HttpStatus.OK.value(),
                     Boolean.TRUE,
@@ -70,6 +75,11 @@ public class HandleCallElevatorRequestService {
             );
             return CompletableFuture.completedFuture(response);
         } catch (Exception e) {
+            LogHelper.builder(log)
+                    .logMsg("Error when handling elevator call request")
+                    .logDetailedMsg(e.getMessage())
+                    .error();
+
             Response<Boolean> response = new Response<>(
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     null,

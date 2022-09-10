@@ -20,4 +20,8 @@ elevator-configs.elevators-count=5
 2. Find SQL schema scripts to setup database on root directory
    - execute scripts on mysql docker container created by docker-compose under localhost:3306
 
-3. Run java application
+3. Run java application. Application will run at port http://localhost:8081
+
+
+## Frontend
+This service has a webpage at http://localhost:8081. The webpage allow viewing of elevator statuses in realtime.

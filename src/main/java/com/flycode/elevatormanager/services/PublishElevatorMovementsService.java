@@ -24,18 +24,28 @@ public class PublishElevatorMovementsService {
 
     @Async
     public CompletableFuture<Void> execute(Elevator elevator) {
-        elevatorRepository.save(elevator);
+        try {
+            elevatorRepository.save(elevator);
 
-        pusher.trigger(
-                Constants.ELEVATOR_PUSHER_CHANNEL,
-                Constants.ELEVATOR_QUEUE_PREFIX + elevator.getId(),
-                elevator
-        );
+            var response = pusher.trigger(
+                    Constants.ELEVATOR_PUSHER_CHANNEL,
+                    Constants.ELEVATOR_QUEUE_PREFIX + elevator.getElevatorTag(),
+                    elevator
+            );
 
-        LogHelper.builder(log)
-                .logMsg("Saved elevator movements")
-                .info();
+            LogHelper.builder(log)
+                    .logMsg("Saved elevator movements")
+                    .logDetailedMsg("Pusher response: " + response.getHttpStatus())
+                    .info();
 
-        return CompletableFuture.completedFuture(null);
+            return CompletableFuture.completedFuture(null);
+        } catch (Exception e) {
+            LogHelper.builder(log)
+                    .logMsg("Saving elevator movements audit trail and pushing events failed")
+                    .logDetailedMsg(e.getMessage())
+                    .error();
+
+            return CompletableFuture.completedFuture(null);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.flycode.elevatormanager.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flycode.elevatormanager.listeners.ElevatorAuditTrailListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,10 +49,12 @@ public class Elevator implements Serializable {
     @Column(name = "door_state")
     private String doorState;
 
+    @JsonIgnore
     @Column(name = "created_date", columnDefinition = "DATETIME", nullable = false)
     @CreatedDate
     private OffsetDateTime createdDate;
 
+    @JsonIgnore
     @Column(name = "updated_date", columnDefinition = "DATETIME", nullable = false)
     @LastModifiedDate
     private OffsetDateTime updatedDate;
