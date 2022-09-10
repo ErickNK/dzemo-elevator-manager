@@ -15,7 +15,7 @@ elevator-configs.elevators-count=5
 1. Docker Compose issued to create services that the whole application requires. 
    - To start up services, navigate to root directory of project.
    - ```shell
-     $ cd docker && docker-compose sudo docker-compose -f docker-compose.dev.yml up -d mysql rabbitmq
+     $ cd docker && sudo docker-compose -f docker-compose.dev.yml up -d mysql rabbitmq
      ```
 2. Find SQL schema scripts to setup database on root directory
    - execute scripts on mysql docker container created by docker-compose under localhost:3306
