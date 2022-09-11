@@ -6,6 +6,7 @@ import com.flycode.elevatormanager.models.Elevator;
 import com.flycode.elevatormanager.services.GetAllElevatorsService;
 import com.flycode.elevatormanager.services.HandleCallElevatorRequestService;
 import com.flycode.elevatormanager.utils.LogHelper;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class MainController {
     @Autowired
     GetAllElevatorsService getAllElevatorsService;
 
+
+    @Operation(summary = "Call elevator to a specific floor.")
     @PostMapping("/v1/call-elevator")
     public CompletableFuture<Response<Boolean>> callElevatorRequest(
             @RequestBody CallElevatorRequest callElevatorRequest
@@ -36,6 +39,7 @@ public class MainController {
         return handleCallElevatorRequestService.execute(callElevatorRequest);
     }
 
+    @Operation(summary = "List all elevators from database.")
     @GetMapping("/v1/elevators")
     public CompletableFuture<Response<List<Elevator>>> getAllElevators() {
         LogHelper.builder(log)

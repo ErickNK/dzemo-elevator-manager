@@ -26,6 +26,10 @@ elevator-configs.elevators-count=5
 ## Frontend
 This service has a webpage at http://localhost:8081. The webpage allows viewing of elevator statuses in realtime.
 
+## OpenAPI
+- Apis are documented using OpenAPI spring library **springdoc**. UI to view docs can be found under
+http://localhost:8081/swagger-ui/index.html
+
 ## Concept
 The service allows a configurable amount of elevators to move to a floor they are called.
 The service relies on Rabbitmq to provide a First In First Out (FIFO) queue system. Each time a call

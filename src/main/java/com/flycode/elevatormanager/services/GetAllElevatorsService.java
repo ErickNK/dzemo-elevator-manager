@@ -19,6 +19,11 @@ public class GetAllElevatorsService {
     @Autowired
     ElevatorRepository elevatorRepository;
 
+    /**
+     * Fetch all elevators from database.
+     *
+     * @return List of all Elevators
+     */
     @Async
     public CompletableFuture<Response<List<Elevator>>> execute() {
         try {

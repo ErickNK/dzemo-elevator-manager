@@ -29,6 +29,13 @@ public class MoveElevatorService {
     @Value("${elevator-configs.doors-time-per-action}")
     Integer doorsTimePerAction;
 
+    /**
+     * Moves the elevator by mimic the movement using Thread.sleep(). The elevator is moved depending on the configured
+     * time to move per floor and time to move per door action. This function also checks if elevator exists.
+     *
+     * @param task Task containig the elevator tag and floor number to move to.
+     * @return void
+     */
     @Async
     public CompletableFuture<Void> execute(Task task) {
         try {
@@ -72,6 +79,16 @@ public class MoveElevatorService {
         }
     }
 
+    /**
+     * This function moves the elevator. It loops and on every loop does Thread.sleep(1000) to wait for 1 sec. Every second it
+     * updates the new position of the elevator by calling the PublishElevatorMovementService.
+     *
+     * @param elevator Elevator to move
+     * @param totalTimeToMove Total time to move the elevator
+     * @param doorNotInitiallyClosed A check for whether the door was initially open. This will add to the total time to move the elevator
+     * @param direction Direction to move elevator to.
+     * @throws InterruptedException
+     */
     private void moveElevator(Elevator elevator, int totalTimeToMove, boolean doorNotInitiallyClosed, String direction) throws InterruptedException {
         var counter = 0;
         var floorCounter = 0;

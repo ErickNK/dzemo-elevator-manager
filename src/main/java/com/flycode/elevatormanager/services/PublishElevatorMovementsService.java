@@ -22,6 +22,14 @@ public class PublishElevatorMovementsService {
     @Autowired
     Pusher pusher;
 
+    /**
+     * Publish elevator events. This function updates elevator with new position. Updating elevator triggers the ElevatorAuditTrailListener that
+     * adds the position to ElevatorAuditTrail table. The function also publishes the event via Pusher that will be received by
+     * frontend webpage via PusherJs
+     *
+     * @param elevator Elevator to publish events.
+     * @return void
+     */
     @Async
     public CompletableFuture<Void> execute(Elevator elevator) {
         try {

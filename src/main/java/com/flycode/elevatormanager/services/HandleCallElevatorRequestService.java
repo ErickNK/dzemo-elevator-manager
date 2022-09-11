@@ -34,6 +34,13 @@ public class HandleCallElevatorRequestService {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
+    /**
+     * Handles a call for an elevator. It checks whether the floor is valid, if the floor is the same as
+     * the elevator is already on. Also checks that the elevator being called exists.
+     *
+     * @param callElevatorRequest CallElevatorRequest data.
+     * @return Response with true value if a task has being sent for the call. If an error occurs returns a Response with an error message.
+     */
     @Async
     public CompletableFuture<Response<Boolean>> execute(CallElevatorRequest callElevatorRequest) {
 
@@ -53,6 +60,7 @@ public class HandleCallElevatorRequestService {
 
             // calling on same floor
             if (elevator.getFloor().equals(callElevatorRequest.getFloorNumber())) {
+                // TODO: disrupt elevator if already on same floor
                 return CompletableFuture.completedFuture(Response.withBadRequestError("Elevator already on same floor"));
             }
 
