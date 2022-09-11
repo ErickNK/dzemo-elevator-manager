@@ -5,7 +5,6 @@ import com.flycode.elevatormanager.dtos.CallElevatorRequest;
 import com.flycode.elevatormanager.dtos.Task;
 import com.flycode.elevatormanager.models.Elevator;
 import com.flycode.elevatormanager.repositories.ElevatorRepository;
-import com.flycode.elevatormanager.services.HandleCallElevatorRequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,11 +25,9 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 
 
 @ExtendWith(MockitoExtension.class)

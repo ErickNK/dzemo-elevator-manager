@@ -25,6 +25,7 @@ elevator-configs.elevators-count=5
 
 ## Frontend
 This service has a webpage at http://localhost:8081. The webpage allows viewing of elevator statuses in realtime.
+The frontend was made with VueJs and built files transfered to /src/main/resources/static.
 
 ## OpenAPI
 - Apis are documented using OpenAPI spring library **springdoc**. UI to view docs can be found under

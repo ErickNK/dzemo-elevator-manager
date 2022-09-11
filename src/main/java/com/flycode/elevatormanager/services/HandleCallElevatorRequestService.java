@@ -74,7 +74,7 @@ public class HandleCallElevatorRequestService {
 
             LogHelper.builder(log)
                     .logMsg("Elevator call queued.")
-                    .error();
+                    .info();
 
             Response<Boolean> response = new Response<>(
                     HttpStatus.OK.value(),
